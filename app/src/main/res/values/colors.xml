@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="primary">#0078c1</color>
+    <color name="primary_dark">#005f99</color>
+    <color name="accent">#d31145</color>
+
+    <color name="line_red">#c6122c</color>
+    <color name="line_blue">#00a0e4</color>
+    <color name="line_brown">#623614</color>
+    <color name="line_green">#0c9b22</color>
+    <color name="line_orange">#f94900</color>
+    <color name="line_purple">#51209e</color>
+    <color name="line_pink">#e27ea8</color>
+    <color name="line_yellow">#fae400</color>
+</resources>
