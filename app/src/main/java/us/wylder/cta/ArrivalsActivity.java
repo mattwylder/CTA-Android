@@ -21,7 +21,9 @@ import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 
+import us.wylder.cta.data.EtaObject;
 import us.wylder.cta.data.StopDB;
 
 
@@ -37,16 +39,19 @@ public class ArrivalsActivity extends ListActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_arrivals);
+//        setContentView(R.layout.activity_arrivals);
         staId = getIntent().getIntExtra("staId", 0);
         name = getIntent().getStringExtra("name");
         this.setTitle(name);
         Log.d(TAG, "About to run");
         //new Thread(new APIConnectionRunnable()).start();
         Log.d(TAG, "Ran");
-        
+        ArrayList<EtaObject> etas = new ArrayList<EtaObject>(5);
+        etas.add(new EtaObject("Loop", "5"));
+        etas.add(new EtaObject("Kimball", "8"));
+        etas.add(new EtaObject("95th/Dan Ryan", "10"));
 
-
+        setListAdapter(new EtaAdapter(getApplicationContext(), etas));
     }
 
 
