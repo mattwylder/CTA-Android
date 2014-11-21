@@ -25,7 +25,7 @@ import java.net.URL;
 import us.wylder.cta.data.StopDB;
 
 
-public class ArrivalsActivity extends Activity {
+public class ArrivalsActivity extends ListActivity {
 
     public final String KEY = "c23c0f6e332d4371b6a998158b018e0e";
     private static final String TAG = "ArrivalsActivity";
@@ -42,8 +42,9 @@ public class ArrivalsActivity extends Activity {
         name = getIntent().getStringExtra("name");
         this.setTitle(name);
         Log.d(TAG, "About to run");
-        new Thread(new APIConnectionRunnable()).start();
+        //new Thread(new APIConnectionRunnable()).start();
         Log.d(TAG, "Ran");
+        
 
 
     }

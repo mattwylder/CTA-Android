@@ -95,7 +95,6 @@ public class TrainLineListFragment extends ListFragment {
 
         i.putExtra("Line", StopDB.lineStrs[position]);
         startActivity(i);
-
     }
 
     /**
