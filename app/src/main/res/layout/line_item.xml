@@ -18,5 +18,11 @@
         android:text="Large Text"
         android:id="@+id/line_name"
         android:layout_margin="15dp" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/staid"
+        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
+        />
 
 </LinearLayout>

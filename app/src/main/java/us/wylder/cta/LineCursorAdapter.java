@@ -29,19 +29,23 @@ public class LineCursorAdapter extends CursorAdapter{
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
         int ndx = cursor.getColumnIndex("name");
-        Log.d(TAG, "bindView " + ndx);
+        int ndx2 = cursor.getColumnIndex("_id");
+        Log.d(TAG, "bindView " + ndx + " " + ndx2);
 
         TextView stName = (TextView) view.findViewById(R.id.line_name);
-        if(stName == null){
+        TextView staid = (TextView) view.findViewById(R.id.staid);
+        if(stName == null || staid == null){
             Log.e(TAG, "Failed to get text view");
             return;
         }
         String name = cursor.getString(ndx);
-        if(name == null){
+        String id = cursor.getString(ndx2);
+        if(name == null || id == null){
             Log.e(TAG, "failed to get string");
             return;
         }
         stName.setText(name);
+        staid.setText(id);
 
     }
 }

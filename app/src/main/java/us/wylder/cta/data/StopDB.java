@@ -15,7 +15,6 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-//TODO: Lat and LNG are broken
 
 /**
  * Created by mattwylder on 11/15/14.
@@ -227,33 +226,33 @@ public class StopDB extends SQLiteOpenHelper{
         Cursor c = null;
         if (line.equals("Red Line"))
         {Log.d(TAG,"Red Line");
-            c = db.query(DB_STATIONS_TABLE_NAME, DB_STATIONS_COLUMN_NAMES, "red > 0", null, null, null, null, null);}
+            c = db.query(DB_STATIONS_TABLE_NAME, DB_STATIONS_COLUMN_NAMES, "red > 0", null, null, null, "red", null);}
         else if(line.equals("Blue Line"))
-            c = db.query(DB_STATIONS_TABLE_NAME, DB_STATIONS_COLUMN_NAMES, "blue > 0", null, null, null, null, null);
+            c = db.query(DB_STATIONS_TABLE_NAME, DB_STATIONS_COLUMN_NAMES, "blue > 0", null, null, null, "blue", null);
         else if(line.equals("Green Line"))
-            c = db.query(DB_STATIONS_TABLE_NAME, DB_STATIONS_COLUMN_NAMES, "green > 0", null, null, null, null, null);
+            c = db.query(DB_STATIONS_TABLE_NAME, DB_STATIONS_COLUMN_NAMES, "green > 0", null, null, null, "green", null);
         else if(line.equals("Brown Line"))
-            c = db.query(DB_STATIONS_TABLE_NAME, DB_STATIONS_COLUMN_NAMES, "brown > 0", null, null, null, null, null);
+            c = db.query(DB_STATIONS_TABLE_NAME, DB_STATIONS_COLUMN_NAMES, "brown > 0", null, null, null, "brown", null);
         else if(line.equals("Orange Line"))
-            c = db.query(DB_STATIONS_TABLE_NAME, DB_STATIONS_COLUMN_NAMES, "orange > 0", null, null, null, null, null);
+            c = db.query(DB_STATIONS_TABLE_NAME, DB_STATIONS_COLUMN_NAMES, "orange > 0", null, null, null, "orange", null);
         else if(line.equals("Yellow Line"))
-            c = db.query(DB_STATIONS_TABLE_NAME, DB_STATIONS_COLUMN_NAMES, "yellow > 0", null, null, null, null, null);
+            c = db.query(DB_STATIONS_TABLE_NAME, DB_STATIONS_COLUMN_NAMES, "yellow > 0", null, null, null, "yellow", null);
         else if(line.equals("Pink Line"))
-            c = db.query(DB_STATIONS_TABLE_NAME, DB_STATIONS_COLUMN_NAMES, "pink > 0", null, null, null, null, null);
+            c = db.query(DB_STATIONS_TABLE_NAME, DB_STATIONS_COLUMN_NAMES, "pink > 0", null, null, null, "pink", null);
         else if(line.equals("Purple Line"))
-            c = db.query(DB_STATIONS_TABLE_NAME, DB_STATIONS_COLUMN_NAMES, "purple > 0", null, null, null, null, null);
+            c = db.query(DB_STATIONS_TABLE_NAME, DB_STATIONS_COLUMN_NAMES, "purple > 0", null, null, null, "purple", null);
 
 
         return c;
     }
 
-    public Cursor getLineCursor()
-    {
+    public Cursor getLineCursor(){
         Log.d(TAG, "getLineCursor");
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor c = db.query(DB_LINES_TABLE_NAME,DB_STATIONS_COLUMN_NAMES, null, null, null, null, null, null);
         return c;
     }
+
 
 
 }

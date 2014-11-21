@@ -2,12 +2,17 @@ package us.wylder.cta;
 
 import android.app.Activity;
 import android.app.ListActivity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import us.wylder.cta.data.StopDB;
 
@@ -16,6 +21,8 @@ public class SecondaryListActivity extends ListActivity {
 
     private static final String TAG = "Second List Activity";
 
+    StopDB db;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,11 +30,28 @@ public class SecondaryListActivity extends ListActivity {
         String line = getIntent().getStringExtra("Line");
         Log.d(TAG, "getStringExtra(\"line\")returned " + line);
         this.setTitle(line);
+        db = StopDB.getInstance(getApplicationContext());
         ListAdapter adp;
         adp = new LineCursorAdapter(getApplicationContext(),
-                StopDB.getInstance(getApplicationContext()).getCursor(line));
+                db.getCursor(line));
 
         this.setListAdapter(adp);
+    }
+
+    @Override
+    protected void onListItemClick (ListView l, View v, int position, long id)
+    {
+        super.onListItemClick(l,v,position,id);
+        TextView tv = (TextView) v.findViewById(R.id.line_name);
+        TextView stid = (TextView) v.findViewById(R.id.staid);
+        //Toast.makeText(getApplicationContext(), stid.getText().toString(),
+        //        Toast.LENGTH_SHORT).show();
+
+        Intent i = new Intent(getApplicationContext(), ArrivalsActivity.class);
+        i.putExtra("name", tv.getText().toString());
+        i.putExtra("staId", Integer.parseInt(stid.getText().toString()));
+        startActivity(i);
+
     }
 
 
