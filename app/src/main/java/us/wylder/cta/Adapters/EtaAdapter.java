@@ -1,4 +1,4 @@
-package us.wylder.cta;
+package us.wylder.cta.Adapters;
 
 import android.content.Context;
 import android.nfc.Tag;
@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import us.wylder.cta.R;
 import us.wylder.cta.data.EtaObject;
 
 /**

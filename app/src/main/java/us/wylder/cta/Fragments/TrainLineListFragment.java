@@ -1,4 +1,4 @@
-package us.wylder.cta;
+package us.wylder.cta.Fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +9,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 
+import us.wylder.cta.R;
+import us.wylder.cta.Activities.SecondaryListActivity;
 import us.wylder.cta.data.StopDB;
 import us.wylder.cta.dummy.DummyContent;
 

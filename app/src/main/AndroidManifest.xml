@@ -13,7 +13,7 @@
         android:theme="@style/AppTheme" >
 
         <activity
-            android:name=".TabActivity"
+            android:name=".Activities.TabActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,15 +22,15 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".SecondaryListActivity"
+            android:name=".Activities.SecondaryListActivity"
             android:label="@string/title_activity_secondary_list"
-            android:parentActivityName=".TabActivity" >
+            android:parentActivityName=".Activities.TabActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="us.wylder.cta.TabActivity" />
         </activity>
         <activity
-            android:name=".ArrivalsActivity"
+            android:name=".Activities.ArrivalsActivity"
             android:label="@string/title_activity_arrivals">
 
         </activity>

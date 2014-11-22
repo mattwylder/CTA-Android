@@ -1,4 +1,4 @@
-package us.wylder.cta;
+package us.wylder.cta.Fragments;
 
 import android.content.Context;
 import android.location.Criteria;
@@ -13,9 +13,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
+import us.wylder.cta.R;
 import us.wylder.cta.data.StopDB;
 import us.wylder.cta.data.TrainStation;
 import us.wylder.cta.dummy.DummyContent;

@@ -1,4 +1,4 @@
-package us.wylder.cta;
+package us.wylder.cta.Adapters;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CursorAdapter;
 import android.widget.TextView;
+
+import us.wylder.cta.R;
 
 
 /**

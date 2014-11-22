@@ -1,6 +1,5 @@
-package us.wylder.cta;
+package us.wylder.cta.Fragments;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.app.ListFragment;
 import android.util.Log;
@@ -9,7 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 
-import us.wylder.cta.data.StopDB;
+import us.wylder.cta.R;
 import us.wylder.cta.dummy.DummyContent;
 
 /**
