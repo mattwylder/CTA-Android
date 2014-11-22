@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.location.Location;
 import android.util.Log;
 
 
@@ -253,6 +254,29 @@ public class StopDB extends SQLiteOpenHelper{
         return c;
     }
 
+    public ArrayList<TrainStation> findNearby(Location loc, float meterlimit){
+        SQLiteDatabase db = this.getReadableDatabase();
+        float lat;
+        float lng;
+        Location stLoc = new Location(loc);
+        ArrayList<TrainStation> results = new ArrayList<TrainStation>();
+        String name;
+        int id;
+        Cursor c = db.query(DB_STATIONS_TABLE_NAME, DB_STATIONS_COLUMN_NAMES,null, null, null, null, null, null);
+        for(c.moveToFirst(); !c.isAfterLast(); c.moveToNext()){
+            lat = c.getFloat(c.getColumnIndex("lat"));
+            lng = c.getFloat(c.getColumnIndex("lng"));
+            name = c.getString(c.getColumnIndex("name"));
+            id = c.getInt(c.getColumnIndex("_id"));
+            stLoc.setLatitude(lat);
+            stLoc.setLongitude(lng);
+            if(loc.distanceTo(stLoc) <= meterlimit){
+                results.add(new TrainStation(id, name, lat, lng));
+                Log.d(TAG, ""+ name);
+            }
+        }
 
+        return results;
+    }
 
 }

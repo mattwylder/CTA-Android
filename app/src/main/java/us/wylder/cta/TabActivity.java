@@ -145,7 +145,7 @@ public class TabActivity extends Activity implements ActionBar.TabListener {
             if(position == 1)
                 return TrainLineListFragment.newInstance(position);
             else
-                return PlaceholderFragment.newInstance(position);
+                return NearbyFragment.newInstance();
         }
 
         @Override

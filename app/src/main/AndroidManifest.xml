@@ -3,6 +3,8 @@
     package="us.wylder.cta" >
     <uses-permission
         android:name="android.permission.INTERNET"/>
+    <uses-permission
+        android:name="android.permission.ACCESS_FINE_LOCATION"/>
 
     <application
         android:allowBackup="true"
@@ -29,11 +31,8 @@
         </activity>
         <activity
             android:name=".ArrivalsActivity"
-            android:label="@string/title_activity_arrivals"
-            android:parentActivityName=".SecondaryListActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="us.wylder.cta.SecondaryListActivity" />
+            android:label="@string/title_activity_arrivals">
+
         </activity>
     </application>
 
