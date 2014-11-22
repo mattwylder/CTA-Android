@@ -49,10 +49,15 @@ public class SecondaryListActivity extends ListActivity {
 
                 PopupMenu pop = new PopupMenu(getApplicationContext(), arg1);
                 pop.getMenuInflater().inflate(R.menu.favorite, pop.getMenu());
+                TextView staIdView = (TextView) arg1.findViewById(R.id.staid);
+                final String staId = staIdView.getText().toString();
                 pop.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener(){
                     public boolean onMenuItemClick(MenuItem item){
                         Toast.makeText(getApplicationContext(), "Clicked Menu item", Toast.LENGTH_SHORT).show();
+                        db.addFavorite(staId);
+
                         return true;
+
                     }
                 });
                 pop.show();

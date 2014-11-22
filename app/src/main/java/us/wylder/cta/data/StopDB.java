@@ -42,8 +42,10 @@ public class StopDB extends SQLiteOpenHelper{
     private static final String SQL_DROP_STATIONS = "DROP TABLE stations";
     private static final String SQL_CREATE_LINES = "CREATE TABLE lines(_id INTEGER PRIMARY KEY, name TEXT)";
     private static final String SQL_DROP_LINES = "DROP TABLE lines";
+    private static final String SQL_CREATE_FAVORITES = "CREATE TABLE favorites(_id INTEGER PRIMARY KEY)";
+    private static final String SQL_DROP_FAVORITES = "DROP TABLE favorites";
 
-    public static final int DATABASE_VERSION = 4;
+    public static final int DATABASE_VERSION = 9;
     public static final String DATABASE_NAME = "Stops.db";
 
     private static final String DB_STATIONS_TABLE_NAME = "stations";
@@ -52,7 +54,12 @@ public class StopDB extends SQLiteOpenHelper{
             "orange", "yellow", "purple", "brown", "pink", "green"};
 
     private static final String DB_LINES_TABLE_NAME = "lines";
-    private static final String[] DB_LINES_COLUMN_NAMES = { "_id", "name"   };
+    private static final String[] DB_LINES_COLUMN_NAMES = { "_id", "name"};
+
+    private static final String DB_FAVORITES_TABLE_NAME = "favorites";
+    private static final String[] DB_FAVORITES_COLUMN_NAMES = {"_id"};
+    private static final String DB_FAVORITES_JOIN_STATION = DB_STATIONS_TABLE_NAME + " NATURAL JOIN " +
+            DB_FAVORITES_TABLE_NAME;
 
 
     private static final String TAG = "Stop Database";
@@ -83,6 +90,7 @@ public class StopDB extends SQLiteOpenHelper{
 
         db.execSQL(SQL_CREATE_STATIONS);
         db.execSQL(SQL_CREATE_LINES);
+        db.execSQL(SQL_CREATE_FAVORITES);
 
         initLines(db);
     }
@@ -91,16 +99,17 @@ public class StopDB extends SQLiteOpenHelper{
     {
         db.execSQL(SQL_DROP_STATIONS);
         db.execSQL(SQL_CREATE_STATIONS);
+        db.execSQL(SQL_DROP_FAVORITES);
+        db.execSQL(SQL_CREATE_FAVORITES);
+
         parseFile(db);
         initLines(db);
     }
 
-    public long addStation( SQLiteDatabase db, int staId, String name, float lat, float lng,
+    public long addStation(SQLiteDatabase db, int staId, String name, float lat, float lng,
                         int red, int blue, int brown,int green,
                         int pink, int purple, int orange, int yellow)
     {
-
-
         ContentValues values = new ContentValues();
         values.put("_id", staId);
         values.put("name", name);
@@ -243,7 +252,6 @@ public class StopDB extends SQLiteOpenHelper{
         else if(line.equals("Purple Line"))
             c = db.query(DB_STATIONS_TABLE_NAME, DB_STATIONS_COLUMN_NAMES, "purple > 0", null, null, null, "purple", null);
 
-
         return c;
     }
 
@@ -253,6 +261,33 @@ public class StopDB extends SQLiteOpenHelper{
         Cursor c = db.query(DB_LINES_TABLE_NAME,DB_STATIONS_COLUMN_NAMES, null, null, null, null, null, null);
         return c;
     }
+
+    public Cursor getFavoriteCursor(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = db.query(DB_FAVORITES_JOIN_STATION, DB_STATIONS_COLUMN_NAMES, null, null, null, null, null, null);
+        return c;
+    }
+
+    public void addFavorite(String staId)
+    {
+        Log.d(TAG, "About to Add Favorite");
+        ContentValues values = new ContentValues();
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        values.put("_id", staId);
+        db.insert(DB_FAVORITES_TABLE_NAME, null, values);
+        values.clear();
+    }
+
+    public void clearFavorites()
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        db.execSQL(SQL_DROP_FAVORITES);
+        db.execSQL(SQL_CREATE_FAVORITES);
+    }
+
 
     public ArrayList<TrainStation> findNearby(Location loc, float meterlimit){
         SQLiteDatabase db = this.getReadableDatabase();

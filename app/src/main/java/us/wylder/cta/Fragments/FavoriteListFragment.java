@@ -5,10 +5,13 @@ import android.app.ListFragment;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 
 
+import us.wylder.cta.Adapters.LineCursorAdapter;
 import us.wylder.cta.R;
+import us.wylder.cta.data.StopDB;
 import us.wylder.cta.dummy.DummyContent;
 
 /**
@@ -29,6 +32,8 @@ public class FavoriteListFragment extends ListFragment {
 
     private OnFragmentInteractionListener mListener;
 
+    private StopDB db;
+
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
@@ -41,10 +46,16 @@ public class FavoriteListFragment extends ListFragment {
         super.onCreate(savedInstanceState);
 
 
-        // TODO: Change Adapter to display your content
         Log.d(TAG, "SectionNumber: " + sectionNumber);
-        setListAdapter(new ArrayAdapter<String>(getActivity(),
-                R.layout.line_item, R.id.line_name, crap));
+//        setListAdapter(new ArrayAdapter<String>(getActivity(),
+//                R.layout.line_item, R.id.line_name, crap));
+        db = StopDB.getInstance(getActivity().getApplicationContext());
+
+        //db.addFavorite();
+
+        ListAdapter adp = new LineCursorAdapter(getActivity().getApplicationContext(),
+                db.getFavoriteCursor());
+        setListAdapter(adp);
     }
 
     public static FavoriteListFragment newInstance(int sectionNumber) {
