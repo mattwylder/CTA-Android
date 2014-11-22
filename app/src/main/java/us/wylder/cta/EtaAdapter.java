@@ -38,9 +38,11 @@ public class EtaAdapter extends ArrayAdapter<EtaObject> {
 
         TextView destName = (TextView) convertView.findViewById(R.id.dest_name);
         TextView eta = (TextView) convertView.findViewById(R.id.eta);
+        TextView now = (TextView) convertView.findViewById(R.id.present_time);
 
         destName.setText(curEta.destName);
         eta.setText(curEta.eta);
+        now.setText(curEta.now);
 
         return convertView;
     }
