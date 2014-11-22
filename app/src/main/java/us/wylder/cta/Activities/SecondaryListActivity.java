@@ -7,9 +7,13 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.PopupMenu;
+import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import us.wylder.cta.Adapters.LineCursorAdapter;
 import us.wylder.cta.R;
@@ -36,7 +40,26 @@ public class SecondaryListActivity extends ListActivity {
 
         this.setListAdapter(adp);
         ListView lv = getListView();
-       // lv.setOnLongClickListener();
+        lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+
+            public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
+                                           int pos, long id) {
+
+                Log.v("long clicked","pos: " + pos);
+
+                PopupMenu pop = new PopupMenu(getApplicationContext(), arg1);
+                pop.getMenuInflater().inflate(R.menu.favorite, pop.getMenu());
+                pop.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener(){
+                    public boolean onMenuItemClick(MenuItem item){
+                        Toast.makeText(getApplicationContext(), "Clicked Menu item", Toast.LENGTH_SHORT).show();
+                        return true;
+                    }
+                });
+                pop.show();
+
+                return true;
+            }
+        });
     }
 
     @Override
