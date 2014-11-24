@@ -35,8 +35,8 @@ public class LineCursorAdapter extends CursorAdapter{
         Log.d(TAG, "bindView " + ndx + " " + ndx2);
 
         TextView stName = (TextView) view.findViewById(R.id.line_name);
-        //TextView staid = (TextView) view.findViewById(R.id.staid);
-        if(stName == null /*|| staid == null*/){
+
+        if(stName == null ){
             Log.e(TAG, "Failed to get text view");
             return;
         }
@@ -47,7 +47,6 @@ public class LineCursorAdapter extends CursorAdapter{
             return;
         }
         stName.setText(name);
-        //staid.setText(id);
 
     }
 }

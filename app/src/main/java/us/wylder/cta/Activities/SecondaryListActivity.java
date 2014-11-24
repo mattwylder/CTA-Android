@@ -52,7 +52,10 @@ public class SecondaryListActivity extends ListActivity {
                 PopupMenu pop = new PopupMenu(getApplicationContext(), arg1);
                 pop.getMenuInflater().inflate(R.menu.favorite, pop.getMenu());
                 TextView staIdView = (TextView) arg1.findViewById(R.id.staid);
-                final String staId = staIdView.getText().toString();
+
+                Cursor c = (Cursor) adp.getItem(pos);
+                final String staId= c.getString(c.getColumnIndex("_id"));
+
                 pop.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener(){
                     public boolean onMenuItemClick(MenuItem item){
                         Toast.makeText(getApplicationContext(), "Clicked Menu item", Toast.LENGTH_SHORT).show();
@@ -74,9 +77,6 @@ public class SecondaryListActivity extends ListActivity {
     {
         super.onListItemClick(l,v,position,id);
         TextView tv = (TextView) v.findViewById(R.id.line_name);
-        TextView stid = (TextView) v.findViewById(R.id.staid);
-        //Toast.makeText(getApplicationContext(), stid.getText().toString(),
-        //        Toast.LENGTH_SHORT).show();
 
         Cursor c = (Cursor) adp.getItem(position);
         int staId = c.getInt(c.getColumnIndex("_id"));

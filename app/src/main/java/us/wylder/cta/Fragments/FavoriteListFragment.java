@@ -1,5 +1,7 @@
 package us.wylder.cta.Fragments;
 
+import android.content.Intent;
+import android.database.Cursor;
 import android.database.DataSetObservable;
 import android.database.DataSetObserver;
 import android.os.Bundle;
@@ -9,8 +11,10 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 
+import us.wylder.cta.Activities.ArrivalsActivity;
 import us.wylder.cta.Adapters.LineCursorAdapter;
 import us.wylder.cta.R;
 import us.wylder.cta.data.StopDB;
@@ -79,7 +83,19 @@ public class FavoriteListFragment extends ListFragment {
             // Notify the active callbacks interface (the activity, if the
             // fragment is attached to one) that an item has been selected.
             mListener.onFragmentInteraction(DummyContent.ITEMS.get(position).id);
+
+
+
         }
+        TextView tv = (TextView) v.findViewById(R.id.line_name);
+
+        Cursor c = (Cursor) adp.getItem(position);
+        int staId = c.getInt(c.getColumnIndex("_id"));
+
+        Intent i = new Intent(getActivity().getApplicationContext(), ArrivalsActivity.class);
+        i.putExtra("name", tv.getText().toString());
+        i.putExtra("staId", staId);
+        startActivity(i);
     }
 
     /**
@@ -104,11 +120,4 @@ public class FavoriteListFragment extends ListFragment {
         Log.d(TAG, "Dataset notified");
     }
 
-//    private class MyDSO extends DataSetObserver{
-//        public void onChanged()
-//        {
-//
-//        }
-//    }
-//
 }

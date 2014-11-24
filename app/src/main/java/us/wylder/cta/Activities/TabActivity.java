@@ -7,8 +7,17 @@ import android.app.ActionBar;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.app.TaskStackBuilder;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
+import android.os.IBinder;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.os.Bundle;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,6 +27,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 
+import us.wylder.cta.FavoriteService;
 import us.wylder.cta.Fragments.FavoriteListFragment;
 import us.wylder.cta.Fragments.NearbyFragment;
 import us.wylder.cta.Fragments.TrainLineListFragment;
@@ -27,7 +37,9 @@ import us.wylder.cta.data.StopDB;
 
 public class TabActivity extends Activity implements ActionBar.TabListener {
 
-    public static final String TAG = "TabActivity";
+    private static final String TAG = "TabActivity";
+
+    private boolean mConnected;
 
     private Window win;
 
@@ -51,6 +63,8 @@ public class TabActivity extends Activity implements ActionBar.TabListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tab);
+
+        notifyMe();
 
         faveFrag = FavoriteListFragment.newInstance();
 
@@ -183,41 +197,63 @@ public class TabActivity extends Activity implements ActionBar.TabListener {
         }
     }
 
+    public void notifyMe(){
+        NotificationCompat.Builder mBuilder =
+                new NotificationCompat.Builder(this)
+                        .setSmallIcon(R.drawable.ic_launcher)
+                        .setContentTitle("My notification")
+                        .setContentText("Hello World!");
+        // Creates an explicit intent for an Activity in your app
+        Intent resultIntent = new Intent(this, TabActivity.class);
 
+        // The stack builder object will contain an artificial back stack for the
+        // started Activity.
+        // This ensures that navigating backward from the Activity leads out of
+        // your application to the Home screen.
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+        // Adds the back stack for the Intent (but not the Intent itself)
+        stackBuilder.addParentStack(TabActivity.class);
+        // Adds the Intent that starts the Activity to the top of the stack
+        stackBuilder.addNextIntent(resultIntent);
+        PendingIntent resultPendingIntent =
+                stackBuilder.getPendingIntent(
+                        0,
+                        PendingIntent.FLAG_UPDATE_CURRENT
+                );
+        mBuilder.setContentIntent(resultPendingIntent);
+        NotificationManager mNotificationManager =
+                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        // mId allows you to update the notification later on.
+        mNotificationManager.notify(0, mBuilder.build());
+    }
 
+    /** Defines callbacks for service binding, passed to bindService() */
+    private ServiceConnection mConnection = new ServiceConnection() {
 
-
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-        private static final String ARG_SECTION_NUMBER = "section_number";
-
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
-        public static PlaceholderFragment newInstance(int sectionNumber) {
-            PlaceholderFragment fragment = new PlaceholderFragment();
-            Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-            fragment.setArguments(args);
-            return fragment;
-        }
-
-        public PlaceholderFragment() {
+        @Override
+        public void onServiceConnected(ComponentName className,
+                                       IBinder service) {
+            Log.d(TAG, "onServiceConnected");
+            // We've bound to LocalService, cast the IBinder and get LocalService instance
+            mConnected = true;
         }
 
         @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_tab, container, false);
-            return rootView;
+        public void onServiceDisconnected(ComponentName arg0) {
+            Log.d(TAG, "onServiceDisconnected");
+           mConnected = false;
+        }
+    };
+    public void startFavoriteService()
+    {
+        Intent intent = new Intent(this, FavoriteService.class);
+        bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
+
+    }
+    public void stopFavoriteService(){
+        if(mConnected) {
+            unbindService(mConnection);
+            mConnected = false;
         }
     }
-
 }
