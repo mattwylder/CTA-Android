@@ -1,5 +1,7 @@
 package us.wylder.cta.Fragments;
 
+import android.database.DataSetObservable;
+import android.database.DataSetObserver;
 import android.os.Bundle;
 import android.app.ListFragment;
 import android.util.Log;
@@ -23,16 +25,14 @@ import us.wylder.cta.dummy.DummyContent;
  */
 public class FavoriteListFragment extends ListFragment {
 
-    private static final String ARG_SECTION_NUMBER = "section_number";
-    String[] crap = {"Poo", "Pee", "Butts", "Balls", "Penis", "Weiner", "Butthole", "Jizz",
-            "Pockets", "LeVar Burton", "Patrick Swayze", "Jack Johnson", "Terri Gross", "Lord & Taylor"};
-    private int sectionNumber;
 
     private static final String TAG = "FavoriteListFragment";
 
     private OnFragmentInteractionListener mListener;
 
     private StopDB db;
+
+    LineCursorAdapter adp;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -46,23 +46,19 @@ public class FavoriteListFragment extends ListFragment {
         super.onCreate(savedInstanceState);
 
 
-        Log.d(TAG, "SectionNumber: " + sectionNumber);
-//        setListAdapter(new ArrayAdapter<String>(getActivity(),
-//                R.layout.line_item, R.id.line_name, crap));
+        //Log.d(TAG, "SectionNumber: " + sectionNumber);
         db = StopDB.getInstance(getActivity().getApplicationContext());
 
-        //db.addFavorite();
 
-        ListAdapter adp = new LineCursorAdapter(getActivity().getApplicationContext(),
+        adp = new LineCursorAdapter(getActivity().getApplicationContext(),
                 db.getFavoriteCursor());
         setListAdapter(adp);
+
     }
 
-    public static FavoriteListFragment newInstance(int sectionNumber) {
+    public static FavoriteListFragment newInstance() {
         FavoriteListFragment fragment = new FavoriteListFragment();
         Bundle args = new Bundle();
-        args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-        //args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -101,4 +97,18 @@ public class FavoriteListFragment extends ListFragment {
         public void onFragmentInteraction(String id);
     }
 
+    public void onClear()
+    {
+        StopDB db = StopDB.getInstance(getActivity().getApplicationContext());
+        adp.changeCursor(db.getFavoriteCursor());
+        Log.d(TAG, "Dataset notified");
+    }
+
+//    private class MyDSO extends DataSetObserver{
+//        public void onChanged()
+//        {
+//
+//        }
+//    }
+//
 }

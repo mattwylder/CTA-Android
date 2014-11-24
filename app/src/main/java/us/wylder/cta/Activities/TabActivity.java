@@ -45,11 +45,15 @@ public class TabActivity extends Activity implements ActionBar.TabListener {
      * The {@link ViewPager} that will host the section contents.
      */
     ViewPager mViewPager;
+    FavoriteListFragment faveFrag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tab);
+
+        faveFrag = FavoriteListFragment.newInstance();
+
 
 
         Log.d(TAG, "ABout to getInstance() of StopDB");
@@ -106,7 +110,13 @@ public class TabActivity extends Activity implements ActionBar.TabListener {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_clear_favorites) {
+            StopDB db = StopDB.getInstance(getApplicationContext());
+            db.clearFavorites();
+            Log.d(TAG, "Clear Favorites pressed");
+            faveFrag.onClear();
+            Log.d(TAG, "faveFrag onCleared");
+
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -145,7 +155,7 @@ public class TabActivity extends Activity implements ActionBar.TabListener {
             Log.d(TAG, "Tab Number: " + position);
 
             if(position == 0)
-                return FavoriteListFragment.newInstance(position);
+                return faveFrag;
             if(position == 1)
                 return TrainLineListFragment.newInstance(position);
             else

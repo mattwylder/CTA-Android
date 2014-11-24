@@ -284,8 +284,8 @@ public class StopDB extends SQLiteOpenHelper{
     {
         SQLiteDatabase db = this.getWritableDatabase();
 
-        db.execSQL(SQL_DROP_FAVORITES);
-        db.execSQL(SQL_CREATE_FAVORITES);
+        db.execSQL("DELETE FROM " + DB_FAVORITES_TABLE_NAME);
+        Log.d(TAG, "Cleared favorites");
     }
 
 

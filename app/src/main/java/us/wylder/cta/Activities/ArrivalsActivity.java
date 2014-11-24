@@ -45,9 +45,6 @@ public class ArrivalsActivity extends ListActivity {
         new Thread(new APIConnectionRunnable()).start();
         Log.d(TAG, "Ran");
         etas = new ArrayList<EtaObject>();
-        //etas.add(new EtaObject("Loop", "5"));
-        //etas.add(new EtaObject("Kimball", "8"));
-        //etas.add(new EtaObject("95th/Dan Ryan", "10"));
         adapter = new EtaAdapter(getApplicationContext(), etas);
         setListAdapter(adapter);
     }
