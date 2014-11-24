@@ -2,6 +2,7 @@ package us.wylder.cta.Activities;
 
 import android.app.ListActivity;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -25,6 +26,7 @@ public class SecondaryListActivity extends ListActivity {
     private static final String TAG = "Second List Activity";
 
     StopDB db;
+    LineCursorAdapter adp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +36,7 @@ public class SecondaryListActivity extends ListActivity {
         Log.d(TAG, "getStringExtra(\"line\")returned " + line);
         this.setTitle(line);
         db = StopDB.getInstance(getApplicationContext());
-        ListAdapter adp;
+
         adp = new LineCursorAdapter(getApplicationContext(),
                 db.getCursor(line));
 
@@ -76,9 +78,11 @@ public class SecondaryListActivity extends ListActivity {
         //Toast.makeText(getApplicationContext(), stid.getText().toString(),
         //        Toast.LENGTH_SHORT).show();
 
+        Cursor c = (Cursor) adp.getItem(position);
+        int staId = c.getInt(c.getColumnIndex("_id"));
         Intent i = new Intent(getApplicationContext(), ArrivalsActivity.class);
         i.putExtra("name", tv.getText().toString());
-        i.putExtra("staId", Integer.parseInt(stid.getText().toString()));
+        i.putExtra("staId", staId);
         startActivity(i);
 
     }
