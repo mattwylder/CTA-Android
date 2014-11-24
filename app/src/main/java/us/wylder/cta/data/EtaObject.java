@@ -24,7 +24,12 @@ public class EtaObject {
 
     public String getTimeDifference()
     {
-        String result = "";
+        return  ""+ getTimeDifferenceRaw() + " min";
+    }
+
+    public long getTimeDifferenceRaw(){
+
+        long result = 0;
         SimpleDateFormat fmt = new SimpleDateFormat("yyyyMMdd HH:mm:ss");
         Date timeQueried = null;
         Date arrivalTime = null;
@@ -36,14 +41,16 @@ public class EtaObject {
             Log.d(TAG, "Difference is " + diff);
 
             long diffMinutes = diff/ (60*1000) % 60;
-            result = ""+ diffMinutes + " min";
-            Log.d(TAG, "Result is " + result);
+
+            result = diffMinutes;
+            Log.d(TAG, "Result is " + diffMinutes);
 
         } catch (Exception e)
         {
             Log.d(TAG, e.getMessage());
         }
         return result;
+
     }
 
 }

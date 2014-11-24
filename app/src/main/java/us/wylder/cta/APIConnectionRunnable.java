@@ -25,10 +25,18 @@ public abstract class APIConnectionRunnable implements Runnable {
     private static final String TAG = "APIConnectionRunnable";
     protected ArrayList<EtaObject> result;
 
-    int staId;
+    private boolean runOnce;
+    private int staId;
 
-    public APIConnectionRunnable(int staId){
+    public APIConnectionRunnable(int staId, boolean runOnce){
         this.staId = staId;
+        this.runOnce = runOnce;
+    }
+
+    public APIConnectionRunnable(int staId)
+    {
+        this.staId = staId;
+        this.runOnce = true;
     }
 
 
@@ -42,20 +50,24 @@ public abstract class APIConnectionRunnable implements Runnable {
         BufferedReader rd;
         String line;
 
+        do {
+            try {
+                url = new URL("http://lapi.transitchicago.com/api/1.0/ttarrivals.aspx?key=" + KEY +
+                        "&mapid=" + staId);
+                con = (HttpURLConnection) url.openConnection();
+                con.setRequestMethod("GET");
+                result = parse(con.getInputStream());
 
-        try {
-            url = new URL("http://lapi.transitchicago.com/api/1.0/ttarrivals.aspx?key=" + KEY +
-                    "&mapid=" + staId);
-            con = (HttpURLConnection) url.openConnection();
-            con.setRequestMethod("GET");
-            result = parse(con.getInputStream());
+            } catch (Exception e) {
+                Log.d(TAG, "Error: " + e);
+            }
+            postProcess();
+            if(!runOnce){
+                Log.d(TAG, "Thread Sleeping");
+                try{ Thread.sleep(10000);} catch(Exception e){Log.d(TAG,"Thread Sleep Exception");}
+            }
 
-        }
-        catch(Exception e)
-        {
-            Log.d(TAG, "Error: " + e);
-        }
-        postProcess();
+        } while (!runOnce);
     }
     private ArrayList<EtaObject> parse(InputStream in) throws XmlPullParserException, IOException {
         XmlPullParser parser = Xml.newPullParser();

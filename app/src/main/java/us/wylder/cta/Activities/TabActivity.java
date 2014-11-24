@@ -27,11 +27,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 
+import de.greenrobot.event.EventBus;
 import us.wylder.cta.FavoriteService;
 import us.wylder.cta.Fragments.FavoriteListFragment;
 import us.wylder.cta.Fragments.NearbyFragment;
 import us.wylder.cta.Fragments.TrainLineListFragment;
 import us.wylder.cta.R;
+import us.wylder.cta.data.EtaObject;
 import us.wylder.cta.data.StopDB;
 
 
@@ -64,7 +66,10 @@ public class TabActivity extends Activity implements ActionBar.TabListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tab);
 
-        notifyMe();
+        startFavoriteService();
+
+        //notifyMe();
+        EventBus.getDefault().register(this);
 
         faveFrag = FavoriteListFragment.newInstance();
 
@@ -250,10 +255,48 @@ public class TabActivity extends Activity implements ActionBar.TabListener {
         bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
 
     }
+
+    @Override
+    public void onDestroy()
+    {
+        super.onDestroy();
+        stopFavoriteService();
+    }
+
     public void stopFavoriteService(){
         if(mConnected) {
             unbindService(mConnection);
             mConnected = false;
         }
+    }
+
+    public void onEvent(EtaObject obj){
+        NotificationCompat.Builder mBuilder =
+                new NotificationCompat.Builder(this)
+                        .setSmallIcon(R.drawable.ic_launcher)
+                        .setContentTitle("Train Arriving")
+                        .setContentText("Train to " + obj.destName + " arriving in " + obj.getTimeDifference());
+        // Creates an explicit intent for an Activity in your app
+        Intent resultIntent = new Intent(this, TabActivity.class);
+
+        // The stack builder object will contain an artificial back stack for the
+        // started Activity.
+        // This ensures that navigating backward from the Activity leads out of
+        // your application to the Home screen.
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+        // Adds the back stack for the Intent (but not the Intent itself)
+        stackBuilder.addParentStack(TabActivity.class);
+        // Adds the Intent that starts the Activity to the top of the stack
+        stackBuilder.addNextIntent(resultIntent);
+        PendingIntent resultPendingIntent =
+                stackBuilder.getPendingIntent(
+                        0,
+                        PendingIntent.FLAG_UPDATE_CURRENT
+                );
+        mBuilder.setContentIntent(resultPendingIntent);
+        NotificationManager mNotificationManager =
+                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        // mId allows you to update the notification later on.
+        mNotificationManager.notify(0, mBuilder.build());
     }
 }
