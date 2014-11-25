@@ -14,6 +14,10 @@ public class TrainStation{
         this.lon = lon;
     }
 
+    public int getStaId(){
+        return staId;
+    }
+
     public String toString()
     {
         return name;

@@ -58,7 +58,7 @@ public class SecondaryListActivity extends ListActivity {
 
                 pop.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener(){
                     public boolean onMenuItemClick(MenuItem item){
-                        Toast.makeText(getApplicationContext(), "Clicked Menu item", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Added Favorite", Toast.LENGTH_SHORT).show();
                         db.addFavorite(staId);
 
                         return true;

@@ -73,6 +73,7 @@ public class FavoriteService extends Service {
                 if(obj.getTimeDifferenceRaw() < 11){
                     EventBus.getDefault().post(obj);
                     Log.d(TAG, obj.destName + " is coming in " + obj.getTimeDifference());
+                    break;
                 }
             }
             }

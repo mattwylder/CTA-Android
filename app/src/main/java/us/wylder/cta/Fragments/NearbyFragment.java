@@ -1,6 +1,8 @@
 package us.wylder.cta.Fragments;
 
 import android.content.Context;
+import android.content.Intent;
+import android.database.Cursor;
 import android.location.Criteria;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -11,10 +13,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 
 import java.util.ArrayList;
 
+import us.wylder.cta.Activities.ArrivalsActivity;
 import us.wylder.cta.R;
 import us.wylder.cta.data.StopDB;
 import us.wylder.cta.data.TrainStation;
@@ -113,7 +117,17 @@ public class NearbyFragment extends ListFragment implements LocationListener {
             // Notify the active callbacks interface (the activity, if the
             // fragment is attached to one) that an item has been selected.
             mListener.onFragmentInteraction(DummyContent.ITEMS.get(position).id);
+
         }
+
+        TextView tv = (TextView) v.findViewById(R.id.line_name);
+
+        int staId = nearbyStations.get(position).getStaId();
+        Intent i = new Intent(getActivity().getApplicationContext(), ArrivalsActivity.class);
+        i.putExtra("name", tv.getText().toString());
+        i.putExtra("staId", staId);
+        startActivity(i);
+
     }
 
     @Override

@@ -64,7 +64,7 @@ public abstract class APIConnectionRunnable implements Runnable {
             postProcess();
             if(!runOnce){
                 Log.d(TAG, "Thread Sleeping");
-                try{ Thread.sleep(10000);} catch(Exception e){Log.d(TAG,"Thread Sleep Exception");}
+                try{ Thread.sleep(60000);} catch(Exception e){Log.d(TAG,"Thread Sleep Exception");}
             }
 
         } while (!runOnce);
