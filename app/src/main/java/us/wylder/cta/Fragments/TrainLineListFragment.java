@@ -12,7 +12,6 @@ import android.widget.ListView;
 import us.wylder.cta.R;
 import us.wylder.cta.Activities.SecondaryListActivity;
 import us.wylder.cta.data.StopDB;
-import us.wylder.cta.dummy.DummyContent;
 
 /**
  * A fragment representing a list of Items.
@@ -91,7 +90,6 @@ public class TrainLineListFragment extends ListFragment {
         if (null != mListener) {
             // Notify the active callbacks interface (the activity, if the
             // fragment is attached to one) that an item has been selected.
-            mListener.onFragmentInteraction(DummyContent.ITEMS.get(position).id);
         }
         Intent i = new Intent(getActivity().getApplicationContext(), SecondaryListActivity.class );
 
