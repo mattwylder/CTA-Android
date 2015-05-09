@@ -33,8 +33,7 @@ public abstract class APIConnectionRunnable implements Runnable {
         this.runOnce = runOnce;
     }
 
-    public APIConnectionRunnable(int staId)
-    {
+    public APIConnectionRunnable(int staId) {
         this.staId = staId;
         this.runOnce = true;
     }
