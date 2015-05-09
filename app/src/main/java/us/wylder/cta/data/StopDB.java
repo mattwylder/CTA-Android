@@ -125,6 +125,7 @@ public class StopDB extends SQLiteOpenHelper {
     }
 
     public void parseFile(SQLiteDatabase db) {
+
         final int NDX_STA_ID = 0;
         final int NDX_NAME = 2;
         final int NDX_LATITUDE = 4;
