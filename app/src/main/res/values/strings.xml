@@ -12,5 +12,6 @@
     <string name="title_activity_arrivals">ArrivalsActivity</string>
     <string name="menu_add_favorite">Add to Favorites</string>
     <string name="menu_clear_favorites">Clear Favorites</string>
+    <string name="no_favorites">There are no favorites to display</string>
 
 </resources>

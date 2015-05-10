@@ -275,6 +275,11 @@ public class StopDB extends SQLiteOpenHelper {
         Log.d(TAG, "Cleared favorites");
     }
 
+    public int getNumFavorites(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = db.query(DB_FAVORITES_TABLE_NAME, null, null, null, null, null, null, null);
+        return c.getCount();
+    }
 
     public ArrayList<TrainStation> findNearby(Location loc, float meterlimit) {
         SQLiteDatabase db = this.getReadableDatabase();

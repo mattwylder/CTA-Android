@@ -47,12 +47,7 @@ public class FavoriteListFragment extends ListFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
-        //Log.d(TAG, "SectionNumber: " + sectionNumber);
         db = StopDB.getInstance(getActivity().getApplicationContext());
-
-
         adp = new LineCursorAdapter(getActivity().getApplicationContext(),
                 db.getFavoriteCursor());
         setListAdapter(adp);
@@ -66,13 +61,11 @@ public class FavoriteListFragment extends ListFragment {
         return fragment;
     }
 
-
     @Override
     public void onDetach() {
         super.onDetach();
         mListener = null;
     }
-
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
@@ -81,8 +74,6 @@ public class FavoriteListFragment extends ListFragment {
         if (null != mListener) {
             // Notify the active callbacks interface (the activity, if the
             // fragment is attached to one) that an item has been selected.
-
-
 
         }
         TextView tv = (TextView) v.findViewById(R.id.line_name);

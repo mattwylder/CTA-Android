@@ -14,6 +14,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.IBinder;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.os.Bundle;
@@ -172,6 +173,7 @@ public class TabActivity extends Activity implements ActionBar.TabListener {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
             Log.d(TAG, "Tab Number: " + position);
+
 
             if(position == 0)
                 return faveFrag;
