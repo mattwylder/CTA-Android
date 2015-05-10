@@ -26,7 +26,7 @@ import us.wylder.cta.data.StopDB;
  * Activities containing this fragment MUST implement the {}
  * interface.
  */
-public class FavoriteListFragment extends ListFragment {
+public class FavoriteListFragment extends ListFragment{
 
 
     private static final String TAG = "FavoriteListFragment";

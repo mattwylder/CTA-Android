@@ -14,24 +14,21 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.IBinder;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 
 import de.greenrobot.event.EventBus;
 import us.wylder.cta.FavoriteService;
 import us.wylder.cta.Fragments.FavoriteListFragment;
 import us.wylder.cta.Fragments.NearbyFragment;
+import us.wylder.cta.Fragments.NewFavoritesFragment;
 import us.wylder.cta.Fragments.TrainLineListFragment;
 import us.wylder.cta.R;
 import us.wylder.cta.data.EtaObject;
@@ -60,7 +57,8 @@ public class TabActivity extends Activity implements ActionBar.TabListener {
      * The {@link ViewPager} that will host the section contents.
      */
     ViewPager mViewPager;
-    FavoriteListFragment faveFrag;
+    //FavoriteListFragment faveFrag;
+    Fragment faveFrag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,12 +70,19 @@ public class TabActivity extends Activity implements ActionBar.TabListener {
         //notifyMe();
         EventBus.getDefault().register(this);
 
-        faveFrag = FavoriteListFragment.newInstance();
+        //faveFrag = FavoriteListFragment.newInstance();
+        //faveFrag = NewFavoritesFragment.newInstance();
 
 
+        Log.d(TAG, "About to getInstance() of StopDB");
+        StopDB db = StopDB.getInstance(getApplicationContext());
 
-        Log.d(TAG, "ABout to getInstance() of StopDB");
-        StopDB.getInstance(getApplicationContext());
+        if( db.getNumFavorites() == 0 ){
+            faveFrag = NewFavoritesFragment.newInstance();
+        }
+        else{
+            faveFrag = FavoriteListFragment.newInstance();
+        }
 
         // Set up the action bar.
         final ActionBar actionBar = getActionBar();
@@ -116,6 +121,20 @@ public class TabActivity extends Activity implements ActionBar.TabListener {
 
     }
 
+    protected void onResume(){
+        super.onResume();
+
+        StopDB db = StopDB.getInstance(getApplicationContext());
+
+        if( db.getNumFavorites() == 0 ){
+            faveFrag = NewFavoritesFragment.newInstance();
+        }
+        else{
+            faveFrag = FavoriteListFragment.newInstance();
+        }
+
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -134,7 +153,8 @@ public class TabActivity extends Activity implements ActionBar.TabListener {
             StopDB db = StopDB.getInstance(getApplicationContext());
             db.clearFavorites();
             Log.d(TAG, "Clear Favorites pressed");
-            faveFrag.onClear();
+
+            //faveFrag.onClear();
             Log.d(TAG, "faveFrag onCleared");
 
             return true;
