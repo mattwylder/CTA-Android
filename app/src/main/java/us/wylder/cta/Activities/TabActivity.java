@@ -58,14 +58,14 @@ public class TabActivity extends Activity implements ActionBar.TabListener {
      */
     ViewPager mViewPager;
     //FavoriteListFragment faveFrag;
-    Fragment faveFrag;
+    NewFavoritesFragment faveFrag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tab);
 
-        startFavoriteService();
+        //startFavoriteService();
 
         //notifyMe();
         EventBus.getDefault().register(this);
@@ -77,12 +77,8 @@ public class TabActivity extends Activity implements ActionBar.TabListener {
         Log.d(TAG, "About to getInstance() of StopDB");
         StopDB db = StopDB.getInstance(getApplicationContext());
 
-        if( db.getNumFavorites() == 0 ){
-            faveFrag = NewFavoritesFragment.newInstance();
-        }
-        else{
-            faveFrag = FavoriteListFragment.newInstance();
-        }
+        faveFrag = NewFavoritesFragment.newInstance();
+
 
         // Set up the action bar.
         final ActionBar actionBar = getActionBar();
@@ -123,15 +119,6 @@ public class TabActivity extends Activity implements ActionBar.TabListener {
 
     protected void onResume(){
         super.onResume();
-
-        StopDB db = StopDB.getInstance(getApplicationContext());
-
-        if( db.getNumFavorites() == 0 ){
-            faveFrag = NewFavoritesFragment.newInstance();
-        }
-        else{
-            faveFrag = FavoriteListFragment.newInstance();
-        }
 
     }
 

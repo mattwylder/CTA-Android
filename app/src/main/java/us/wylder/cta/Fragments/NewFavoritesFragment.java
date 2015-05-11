@@ -10,6 +10,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -30,6 +33,9 @@ public class NewFavoritesFragment extends Fragment{
     private static final String TAG = "NewFavoritesFragment";
 
     private OnFragmentInteractionListener mListener;
+    private ListView listView;
+    private TextView emptyFavoritesTextView;
+
 
 
     public static NewFavoritesFragment newInstance() {
@@ -53,8 +59,25 @@ public class NewFavoritesFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        final View rootView = inflater.inflate(R.layout.fragment_new_favorites, container, false);
 
-        return inflater.inflate(R.layout.fragment_favorites_no_favorites, container, false);
+        emptyFavoritesTextView = (TextView) rootView.findViewById(R.id.noFavoritesTextView);
+        listView = (ListView) rootView.findViewById(R.id.favoriteListView);
+        StopDB db = StopDB.getInstance(getActivity().getApplicationContext());
+        LineCursorAdapter adp = new LineCursorAdapter(getActivity().getApplicationContext(),
+                db.getFavoriteCursor());
+
+        if(adp.isEmpty()){
+            listView.setVisibility(View.INVISIBLE);
+            emptyFavoritesTextView.setVisibility(View.VISIBLE);
+        }
+        else{
+            listView.setAdapter(adp);
+        }
+
+
+
+        return rootView;
     }
 
 
