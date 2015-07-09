@@ -25,7 +25,7 @@
             android:parentActivityName=".Activities.TabActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="us.wylder.cta.TabActivity" />
+                android:value="us.wylder.cta.Activities.TabActivity" />
         </activity>
         <activity
             android:name=".Activities.ArrivalsActivity"

@@ -1,20 +1,14 @@
 package us.wylder.cta.Fragments;
 
 import android.app.Activity;
-import android.app.ListActivity;
+import android.app.Fragment;
 import android.net.Uri;
 import android.os.Bundle;
-import android.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
-
-import java.util.List;
 
 import us.wylder.cta.Adapters.LineCursorAdapter;
 import us.wylder.cta.R;
@@ -35,18 +29,18 @@ public class NewFavoritesFragment extends Fragment{
     private OnFragmentInteractionListener mListener;
     private ListView listView;
     private TextView emptyFavoritesTextView;
+    private LineCursorAdapter adp;
 
 
+    public NewFavoritesFragment() {
+        // Required empty public constructor
+    }
 
     public static NewFavoritesFragment newInstance() {
         NewFavoritesFragment fragment = new NewFavoritesFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
-    }
-
-    public NewFavoritesFragment() {
-        // Required empty public constructor
     }
 
     @Override
@@ -64,22 +58,14 @@ public class NewFavoritesFragment extends Fragment{
         emptyFavoritesTextView = (TextView) rootView.findViewById(R.id.noFavoritesTextView);
         listView = (ListView) rootView.findViewById(R.id.favoriteListView);
         StopDB db = StopDB.getInstance(getActivity().getApplicationContext());
-        LineCursorAdapter adp = new LineCursorAdapter(getActivity().getApplicationContext(),
+        adp = new LineCursorAdapter(getActivity().getApplicationContext(),
                 db.getFavoriteCursor());
 
-        if(adp.isEmpty()){
-            listView.setVisibility(View.INVISIBLE);
-            emptyFavoritesTextView.setVisibility(View.VISIBLE);
-        }
-        else{
-            listView.setAdapter(adp);
-        }
-
-
+        draw();
 
         return rootView;
-    }
 
+    }
 
     @Override
     public void onAttach(Activity activity) {
@@ -91,7 +77,6 @@ public class NewFavoritesFragment extends Fragment{
 //                    + " must implement OnFragmentInteractionListener");
 //        }
 
-
     }
 
     @Override
@@ -100,9 +85,13 @@ public class NewFavoritesFragment extends Fragment{
         mListener = null;
     }
 
-    public void onClear()
-    {
-
+    public void draw() {
+        if (adp.isEmpty()) {
+            listView.setVisibility(View.INVISIBLE);
+            emptyFavoritesTextView.setVisibility(View.VISIBLE);
+        } else {
+            listView.setAdapter(adp);
+        }
     }
 
     /**
@@ -117,7 +106,7 @@ public class NewFavoritesFragment extends Fragment{
      */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        public void onFragmentInteraction(Uri uri);
+        void onFragmentInteraction(Uri uri);
     }
 
 }

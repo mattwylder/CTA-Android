@@ -1,9 +1,7 @@
 package us.wylder.cta.Activities;
 
-import java.util.Locale;
-
-import android.app.Activity;
 import android.app.ActionBar;
+import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -14,19 +12,19 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v13.app.FragmentPagerAdapter;
-import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.Window;
+
+import java.util.Locale;
 
 import de.greenrobot.event.EventBus;
 import us.wylder.cta.FavoriteService;
-import us.wylder.cta.Fragments.FavoriteListFragment;
 import us.wylder.cta.Fragments.NearbyFragment;
 import us.wylder.cta.Fragments.NewFavoritesFragment;
 import us.wylder.cta.Fragments.TrainLineListFragment;
@@ -38,11 +36,6 @@ import us.wylder.cta.data.StopDB;
 public class TabActivity extends Activity implements ActionBar.TabListener {
 
     private static final String TAG = "TabActivity";
-
-    private boolean mConnected;
-
-    private Window win;
-
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -52,13 +45,32 @@ public class TabActivity extends Activity implements ActionBar.TabListener {
      * {@link android.support.v13.app.FragmentStatePagerAdapter}.
      */
     SectionsPagerAdapter mSectionsPagerAdapter;
-
     /**
      * The {@link ViewPager} that will host the section contents.
      */
     ViewPager mViewPager;
     //FavoriteListFragment faveFrag;
     NewFavoritesFragment faveFrag;
+    private boolean mConnected;
+    /**
+     * Defines callbacks for service binding, passed to bindService()
+     */
+    private ServiceConnection mConnection = new ServiceConnection() {
+
+        @Override
+        public void onServiceConnected(ComponentName className,
+                                       IBinder service) {
+            Log.d(TAG, "onServiceConnected");
+            // We've bound to LocalService, cast the IBinder and get LocalService instance
+            mConnected = true;
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName arg0) {
+            Log.d(TAG, "onServiceDisconnected");
+            mConnected = false;
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,12 +85,10 @@ public class TabActivity extends Activity implements ActionBar.TabListener {
         //faveFrag = FavoriteListFragment.newInstance();
         //faveFrag = NewFavoritesFragment.newInstance();
 
-
-        Log.d(TAG, "About to getInstance() of StopDB");
-        StopDB db = StopDB.getInstance(getApplicationContext());
+        //Log.d(TAG, "About to getInstance() of StopDB");
+        //StopDB db = StopDB.getInstance(getApplicationContext());
 
         faveFrag = NewFavoritesFragment.newInstance();
-
 
         // Set up the action bar.
         final ActionBar actionBar = getActionBar();
@@ -114,14 +124,11 @@ public class TabActivity extends Activity implements ActionBar.TabListener {
                             .setTabListener(this));
         }
 
-
     }
 
     protected void onResume(){
         super.onResume();
-
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -139,10 +146,8 @@ public class TabActivity extends Activity implements ActionBar.TabListener {
         if (id == R.id.action_clear_favorites) {
             StopDB db = StopDB.getInstance(getApplicationContext());
             db.clearFavorites();
-            Log.d(TAG, "Clear Favorites pressed");
 
-            //faveFrag.onClear();
-            Log.d(TAG, "faveFrag onCleared");
+            Log.d(TAG, "Clear Favorites pressed");
 
             return true;
         }
@@ -153,7 +158,7 @@ public class TabActivity extends Activity implements ActionBar.TabListener {
     public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
         // When the given tab is selected, switch to the corresponding page in
         // the ViewPager.
-        Log.d(TAG, "" + tab.getPosition());
+        Log.d(TAG, "Tab " + tab.getPosition() + " selected");
         mViewPager.setCurrentItem(tab.getPosition());
     }
 
@@ -163,52 +168,7 @@ public class TabActivity extends Activity implements ActionBar.TabListener {
 
     @Override
     public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-    }
-
-    /**
-     * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
-     * one of the sections/tabs/pages.
-     */
-    public class SectionsPagerAdapter extends FragmentPagerAdapter {
-
-        public SectionsPagerAdapter(FragmentManager fm) {
-            super(fm);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            // getItem is called to instantiate the fragment for the given page.
-            // Return a PlaceholderFragment (defined as a static inner class below).
-            Log.d(TAG, "Tab Number: " + position);
-
-
-            if(position == 0)
-                return faveFrag;
-            if(position == 1)
-                return TrainLineListFragment.newInstance(position);
-            else
-                return NearbyFragment.newInstance();
-        }
-
-        @Override
-        public int getCount() {
-            // Show 3 total pages.
-            return 3;
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            Locale l = Locale.getDefault();
-            switch (position) {
-                case 0:
-                    return getString(R.string.title_section1).toUpperCase(l);
-                case 1:
-                    return getString(R.string.title_section2).toUpperCase(l);
-                case 2:
-                    return getString(R.string.title_section3).toUpperCase(l);
-            }
-            return null;
-        }
+        Log.d(TAG, "Tab " + tab.getPosition() + " reselected");
     }
 
     public void notifyMe(){
@@ -241,33 +201,14 @@ public class TabActivity extends Activity implements ActionBar.TabListener {
         mNotificationManager.notify(0, mBuilder.build());
     }
 
-    /** Defines callbacks for service binding, passed to bindService() */
-    private ServiceConnection mConnection = new ServiceConnection() {
-
-        @Override
-        public void onServiceConnected(ComponentName className,
-                                       IBinder service) {
-            Log.d(TAG, "onServiceConnected");
-            // We've bound to LocalService, cast the IBinder and get LocalService instance
-            mConnected = true;
-        }
-
-        @Override
-        public void onServiceDisconnected(ComponentName arg0) {
-            Log.d(TAG, "onServiceDisconnected");
-           mConnected = false;
-        }
-    };
-    public void startFavoriteService()
-    {
+    public void startFavoriteService() {
         Intent intent = new Intent(this, FavoriteService.class);
         bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
 
     }
 
     @Override
-    public void onDestroy()
-    {
+    public void onDestroy() {
         super.onDestroy();
         stopFavoriteService();
     }
@@ -307,5 +248,54 @@ public class TabActivity extends Activity implements ActionBar.TabListener {
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         // mId allows you to update the notification later on.
         mNotificationManager.notify(0, mBuilder.build());
+    }
+
+    /**
+     * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
+     * one of the sections/tabs/pages.
+     */
+    public class SectionsPagerAdapter extends FragmentPagerAdapter {
+
+        public SectionsPagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            // getItem is called to instantiate the fragment for the given page.
+            // Return a PlaceholderFragment (defined as a static inner class below).
+            Log.d(TAG, "getItem Tab Number: " + position);
+
+            if (position == 0) {
+                return faveFrag;
+                //return NewFavoritesFragment.newInstance();
+            }
+            if (position == 1) {
+                return TrainLineListFragment.newInstance(position);
+            } else {
+                return NearbyFragment.newInstance();
+            }
+
+        }
+
+        @Override
+        public int getCount() {
+            // Show 3 total pages.
+            return 3;
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            Locale l = Locale.getDefault();
+            switch (position) {
+                case 0:
+                    return getString(R.string.title_section1).toUpperCase(l);
+                case 1:
+                    return getString(R.string.title_section2).toUpperCase(l);
+                case 2:
+                    return getString(R.string.title_section3).toUpperCase(l);
+            }
+            return null;
+        }
     }
 }
