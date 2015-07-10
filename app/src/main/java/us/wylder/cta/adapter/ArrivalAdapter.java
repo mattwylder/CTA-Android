@@ -1,7 +1,6 @@
-package us.wylder.cta.Adapters;
+package us.wylder.cta.adapter;
 
 import android.content.Context;
-import android.nfc.Tag;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,24 +11,24 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import us.wylder.cta.R;
-import us.wylder.cta.data.EtaObject;
+import us.wylder.cta.data.Arrival;
 
 /**
  * Created by mattwylder on 11/21/14.
  */
-public class EtaAdapter extends ArrayAdapter<EtaObject> {
+public class ArrivalAdapter extends ArrayAdapter<Arrival> {
 
-    private static final String TAG = "EtaAdapter";
+    private static final String TAG = "ArrivalAdapter";
 
 
-    public EtaAdapter(Context context, ArrayList<EtaObject> etas){
+    public ArrivalAdapter(Context context, ArrayList<Arrival> etas){
         super(context, 0, etas);
     }
 
 
     public View getView(int position, View convertView, ViewGroup parent){
 
-        EtaObject curEta = getItem(position);
+        Arrival curEta = getItem(position);
         Log.d(TAG, "Got Item: "+ curEta);
         if(convertView == null)
         {

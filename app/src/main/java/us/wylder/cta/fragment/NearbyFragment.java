@@ -1,8 +1,7 @@
-package us.wylder.cta.Fragments;
+package us.wylder.cta.fragment;
 
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.location.Criteria;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -18,7 +17,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import us.wylder.cta.Activities.ArrivalsActivity;
+import us.wylder.cta.activity.ArrivalsActivity;
 import us.wylder.cta.R;
 import us.wylder.cta.data.StopDB;
 import us.wylder.cta.data.TrainStation;

@@ -1,4 +1,4 @@
-package us.wylder.cta.Activities;
+package us.wylder.cta.activity;
 
 import android.app.ActionBar;
 import android.app.Activity;
@@ -25,11 +25,11 @@ import java.util.Locale;
 
 import de.greenrobot.event.EventBus;
 import us.wylder.cta.FavoriteService;
-import us.wylder.cta.Fragments.NearbyFragment;
-import us.wylder.cta.Fragments.NewFavoritesFragment;
-import us.wylder.cta.Fragments.TrainLineListFragment;
+import us.wylder.cta.fragment.NearbyFragment;
+import us.wylder.cta.fragment.NewFavoritesFragment;
+import us.wylder.cta.fragment.TrainLineListFragment;
 import us.wylder.cta.R;
-import us.wylder.cta.data.EtaObject;
+import us.wylder.cta.data.Arrival;
 import us.wylder.cta.data.StopDB;
 
 
@@ -220,7 +220,7 @@ public class TabActivity extends Activity implements ActionBar.TabListener {
         }
     }
 
-    public void onEvent(EtaObject obj){
+    public void onEvent(Arrival obj){
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(this)
                         .setSmallIcon(R.drawable.ic_launcher)

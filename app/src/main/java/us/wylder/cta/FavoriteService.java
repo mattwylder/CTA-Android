@@ -8,7 +8,7 @@ import android.os.IBinder;
 import android.util.Log;
 
 import de.greenrobot.event.EventBus;
-import us.wylder.cta.data.EtaObject;
+import us.wylder.cta.data.Arrival;
 import us.wylder.cta.data.StopDB;
 
 public class FavoriteService extends Service {
@@ -69,7 +69,7 @@ public class FavoriteService extends Service {
         public void postProcess(){
             Log.d(TAG, "Post Processing");
             if(result != null)
-            {for(EtaObject obj: result){
+            {for(Arrival obj: result){
                 if(obj.getTimeDifferenceRaw() < 11){
                     EventBus.getDefault().post(obj);
                     Log.d(TAG, obj.destName + " is coming in " + obj.getTimeDifference());

@@ -1,4 +1,4 @@
-package us.wylder.cta.Fragments;
+package us.wylder.cta.fragment;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import us.wylder.cta.Adapters.LineCursorAdapter;
+import us.wylder.cta.adapter.LineCursorAdapter;
 import us.wylder.cta.R;
 import us.wylder.cta.data.StopDB;
 

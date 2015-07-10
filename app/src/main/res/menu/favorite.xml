@@ -1,6 +1,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="us.wylder.cta.Activities.ArrivalsActivity" >
+    tools:context="us.wylder.cta.activity.ArrivalsActivity" >
     <item android:id="@+id/add_favorite"
         android:title="@string/menu_add_favorite"
         android:orderInCategory="100"

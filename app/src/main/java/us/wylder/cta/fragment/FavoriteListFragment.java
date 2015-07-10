@@ -1,21 +1,17 @@
-package us.wylder.cta.Fragments;
+package us.wylder.cta.fragment;
 
 import android.content.Intent;
 import android.database.Cursor;
-import android.database.DataSetObservable;
-import android.database.DataSetObserver;
 import android.os.Bundle;
 import android.app.ListFragment;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
 
-import us.wylder.cta.Activities.ArrivalsActivity;
-import us.wylder.cta.Adapters.LineCursorAdapter;
+import us.wylder.cta.activity.ArrivalsActivity;
+import us.wylder.cta.adapter.LineCursorAdapter;
 import us.wylder.cta.R;
 import us.wylder.cta.data.StopDB;
 

@@ -1,4 +1,4 @@
-package us.wylder.cta.Adapters;
+package us.wylder.cta.adapter;
 
 import android.content.Context;
 import android.database.Cursor;

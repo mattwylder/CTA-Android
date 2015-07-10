@@ -1,4 +1,4 @@
-package us.wylder.cta.Activities;
+package us.wylder.cta.activity;
 
 import android.app.ListActivity;
 import android.content.Intent;
@@ -9,14 +9,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.PopupMenu;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import us.wylder.cta.Adapters.LineCursorAdapter;
+import us.wylder.cta.adapter.LineCursorAdapter;
 import us.wylder.cta.R;
 import us.wylder.cta.data.StopDB;
 

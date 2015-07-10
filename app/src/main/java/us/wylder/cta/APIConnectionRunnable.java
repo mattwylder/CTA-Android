@@ -13,7 +13,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 
-import us.wylder.cta.data.EtaObject;
+import us.wylder.cta.data.Arrival;
 
 /**
  * Created by mattwylder on 11/23/14.
@@ -23,7 +23,7 @@ public abstract class APIConnectionRunnable implements Runnable {
     public final String KEY = "c23c0f6e332d4371b6a998158b018e0e";
 
     private static final String TAG = "APIConnectionRunnable";
-    protected ArrayList<EtaObject> result;
+    protected ArrayList<Arrival> result;
 
     private boolean runOnce;
     private int staId;
@@ -68,7 +68,7 @@ public abstract class APIConnectionRunnable implements Runnable {
 
         } while (!runOnce);
     }
-    private ArrayList<EtaObject> parse(InputStream in) throws XmlPullParserException, IOException {
+    private ArrayList<Arrival> parse(InputStream in) throws XmlPullParserException, IOException {
         XmlPullParser parser = Xml.newPullParser();
         parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
         parser.setInput(in, null);
@@ -76,8 +76,8 @@ public abstract class APIConnectionRunnable implements Runnable {
         Log.d(TAG, "About to readFeed()");
         return readFeed(parser);
     }
-    private ArrayList<EtaObject> readFeed(XmlPullParser parser) throws XmlPullParserException, IOException {
-        ArrayList<EtaObject> entries = new ArrayList<EtaObject>();
+    private ArrayList<Arrival> readFeed(XmlPullParser parser) throws XmlPullParserException, IOException {
+        ArrayList<Arrival> entries = new ArrayList<Arrival>();
         Log.d(TAG, "in readFeed()");
         parser.require(XmlPullParser.START_TAG, null, "ctatt");
         while (parser.next() != XmlPullParser.END_TAG) {
@@ -94,7 +94,7 @@ public abstract class APIConnectionRunnable implements Runnable {
         }
         return entries;
     }
-    private EtaObject readEta(XmlPullParser parser) throws XmlPullParserException, IOException {
+    private Arrival readEta(XmlPullParser parser) throws XmlPullParserException, IOException {
         parser.require(XmlPullParser.START_TAG, null, "eta");
         String destNm = null;
         String arrt = null;
@@ -115,7 +115,7 @@ public abstract class APIConnectionRunnable implements Runnable {
                 skip(parser);
             }
         }
-        return new EtaObject(destNm, arrt,prdt);
+        return new Arrival(destNm, arrt,prdt);
     }
     private String readTitle(XmlPullParser parser) throws IOException, XmlPullParserException {
         parser.require(XmlPullParser.START_TAG, null, "destNm");

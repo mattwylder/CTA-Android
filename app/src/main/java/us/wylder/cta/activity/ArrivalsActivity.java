@@ -1,27 +1,18 @@
-package us.wylder.cta.Activities;
+package us.wylder.cta.activity;
 
 import android.app.ListActivity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
-import android.util.Xml;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import org.xmlpull.v1.XmlPullParser;
-import org.xmlpull.v1.XmlPullParserException;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 
 import us.wylder.cta.APIConnectionRunnable;
-import us.wylder.cta.Adapters.EtaAdapter;
+import us.wylder.cta.adapter.ArrivalAdapter;
 import us.wylder.cta.R;
-import us.wylder.cta.data.EtaObject;
+import us.wylder.cta.data.Arrival;
 
 
 public class ArrivalsActivity extends ListActivity {
@@ -32,8 +23,8 @@ public class ArrivalsActivity extends ListActivity {
     private int staId;
     private String name;
     private Handler mHandler = new Handler();
-    private ArrayList<EtaObject> etas;
-    EtaAdapter adapter;
+    private ArrayList<Arrival> etas;
+    ArrivalAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,8 +36,8 @@ public class ArrivalsActivity extends ListActivity {
         Log.d(TAG, "About to run");
         new Thread(new ArrivalRunnable(staId)).start();
         Log.d(TAG, "Ran");
-        etas = new ArrayList<EtaObject>();
-        adapter = new EtaAdapter(getApplicationContext(), etas);
+        etas = new ArrayList<Arrival>();
+        adapter = new ArrivalAdapter(getApplicationContext(), etas);
         setListAdapter(adapter);
     }
 
@@ -83,7 +74,7 @@ public class ArrivalsActivity extends ListActivity {
                 @Override
                 public void run() {
                     etas.clear();
-                    for (EtaObject obj : result) {
+                    for (Arrival obj : result) {
                         Log.d(TAG, "Adding obj: " + obj.destName);
                         etas.add(obj);
                     }
@@ -99,7 +90,7 @@ public class ArrivalsActivity extends ListActivity {
 //    private class APIConnectionRunnable implements Runnable {
 //
 //        private static final String TAG = "APIConnectionRunnable";
-//        private ArrayList<EtaObject> result;
+//        private ArrayList<Arrival> result;
 //
 //
 //        @Override
@@ -127,7 +118,7 @@ public class ArrivalsActivity extends ListActivity {
 //                @Override
 //                public void run() {
 //                    etas.clear();
-//                    for(EtaObject obj: result){
+//                    for(Arrival obj: result){
 //                        Log.d(TAG, "Adding obj: " + obj.destName);
 //                        etas.add(obj);
 //                    }
@@ -137,7 +128,7 @@ public class ArrivalsActivity extends ListActivity {
 //                }
 //            });
 //        }
-//        private ArrayList<EtaObject> parse(InputStream in) throws XmlPullParserException, IOException {
+//        private ArrayList<Arrival> parse(InputStream in) throws XmlPullParserException, IOException {
 //            XmlPullParser parser = Xml.newPullParser();
 //            parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
 //            parser.setInput(in, null);
@@ -145,8 +136,8 @@ public class ArrivalsActivity extends ListActivity {
 //            Log.d(TAG, "About to readFeed()");
 //            return readFeed(parser);
 //        }
-//        private ArrayList<EtaObject> readFeed(XmlPullParser parser) throws XmlPullParserException, IOException {
-//            ArrayList<EtaObject> entries = new ArrayList<EtaObject>();
+//        private ArrayList<Arrival> readFeed(XmlPullParser parser) throws XmlPullParserException, IOException {
+//            ArrayList<Arrival> entries = new ArrayList<Arrival>();
 //            Log.d(TAG, "in readFeed()");
 //            parser.require(XmlPullParser.START_TAG, null, "ctatt");
 //            while (parser.next() != XmlPullParser.END_TAG) {
@@ -163,7 +154,7 @@ public class ArrivalsActivity extends ListActivity {
 //            }
 //            return entries;
 //        }
-//        private EtaObject readEta(XmlPullParser parser) throws XmlPullParserException, IOException {
+//        private Arrival readEta(XmlPullParser parser) throws XmlPullParserException, IOException {
 //            parser.require(XmlPullParser.START_TAG, null, "eta");
 //            String destNm = null;
 //            String arrt = null;
@@ -184,7 +175,7 @@ public class ArrivalsActivity extends ListActivity {
 //                    skip(parser);
 //                }
 //            }
-//            return new EtaObject(destNm, arrt,prdt);
+//            return new Arrival(destNm, arrt,prdt);
 //        }
 //        private String readTitle(XmlPullParser parser) throws IOException, XmlPullParserException {
 //            parser.require(XmlPullParser.START_TAG, null, "destNm");
