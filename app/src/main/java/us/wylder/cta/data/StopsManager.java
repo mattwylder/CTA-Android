@@ -9,8 +9,6 @@ import android.location.Location;
 import android.util.Log;
 
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -20,7 +18,7 @@ import java.util.Scanner;
 /**
  * Created by mattwylder on 11/15/14.
  */
-public class StopDB extends SQLiteOpenHelper {
+public class StopsManager extends SQLiteOpenHelper {
 
     private Context context;
 
@@ -64,16 +62,16 @@ public class StopDB extends SQLiteOpenHelper {
 
     private static final String TAG = "Stop Database";
 
-    private static StopDB singleton = null;
+    private static StopsManager singleton = null;
 
-    protected StopDB(Context context) {
+    protected StopsManager(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         this.context = context;
     }
 
-    public static StopDB getInstance(Context context) {
+    public static StopsManager getInstance(Context context) {
         if (singleton == null) {
-            singleton = new StopDB(context);
+            singleton = new StopsManager(context);
             Log.d(TAG, "Created singleton");
         }
 

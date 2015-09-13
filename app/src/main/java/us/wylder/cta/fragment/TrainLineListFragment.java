@@ -11,7 +11,7 @@ import android.widget.ListView;
 
 import us.wylder.cta.R;
 import us.wylder.cta.activity.StopsListActivity;
-import us.wylder.cta.data.StopDB;
+import us.wylder.cta.data.StopsManager;
 
 /**
  * A fragment representing a list of Items.
@@ -71,7 +71,7 @@ public class TrainLineListFragment extends ListFragment {
 
         Log.d(TAG, "SectionNumber: " + sectionNumber);
         setListAdapter(new ArrayAdapter<String>(getActivity(),
-                    R.layout.list_item_route, R.id.line_name, StopDB.lineStrs));
+                    R.layout.list_item_route, R.id.line_name, StopsManager.lineStrs));
 
     }
 
@@ -93,7 +93,7 @@ public class TrainLineListFragment extends ListFragment {
         }
         Intent i = new Intent(getActivity().getApplicationContext(), StopsListActivity.class );
 
-        i.putExtra("Line", StopDB.lineStrs[position]);
+        i.putExtra("Line", StopsManager.lineStrs[position]);
         startActivity(i);
     }
 

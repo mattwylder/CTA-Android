@@ -9,7 +9,7 @@ import android.util.Log;
 
 import de.greenrobot.event.EventBus;
 import us.wylder.cta.data.Arrival;
-import us.wylder.cta.data.StopDB;
+import us.wylder.cta.data.StopsManager;
 
 public class FavoriteService extends Service {
 
@@ -19,7 +19,7 @@ public class FavoriteService extends Service {
 
     Thread thread;
 
-    StopDB db;
+    StopsManager db;
 
     public FavoriteService() {
     }
@@ -27,7 +27,7 @@ public class FavoriteService extends Service {
     @Override
     public void onCreate(){
         Log.d(TAG, "Service On Create");
-        db = StopDB.getInstance(getApplicationContext());
+        db = StopsManager.getInstance(getApplicationContext());
 
         Cursor c = db.getFavoriteCursor();
 

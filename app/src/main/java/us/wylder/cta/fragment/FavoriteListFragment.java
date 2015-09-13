@@ -13,7 +13,7 @@ import android.widget.TextView;
 import us.wylder.cta.activity.ArrivalsActivity;
 import us.wylder.cta.adapter.RouteCursorAdapter;
 import us.wylder.cta.R;
-import us.wylder.cta.data.StopDB;
+import us.wylder.cta.data.StopsManager;
 
 /**
  * A fragment representing a list of Items.
@@ -29,7 +29,7 @@ public class FavoriteListFragment extends ListFragment{
 
     private OnFragmentInteractionListener mListener;
 
-    private StopDB db;
+    private StopsManager db;
 
     RouteCursorAdapter adp;
 
@@ -43,7 +43,7 @@ public class FavoriteListFragment extends ListFragment{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        db = StopDB.getInstance(getActivity().getApplicationContext());
+        db = StopsManager.getInstance(getActivity().getApplicationContext());
         adp = new RouteCursorAdapter(getActivity().getApplicationContext(),
                 db.getFavoriteCursor());
         setListAdapter(adp);
@@ -100,7 +100,7 @@ public class FavoriteListFragment extends ListFragment{
 
     public void onClear()
     {
-        StopDB db = StopDB.getInstance(getActivity().getApplicationContext());
+        StopsManager db = StopsManager.getInstance(getActivity().getApplicationContext());
         adp.changeCursor(db.getFavoriteCursor());
         Log.d(TAG, "Dataset notified");
     }

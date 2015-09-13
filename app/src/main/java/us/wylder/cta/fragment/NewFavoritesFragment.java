@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import us.wylder.cta.adapter.RouteCursorAdapter;
 import us.wylder.cta.R;
-import us.wylder.cta.data.StopDB;
+import us.wylder.cta.data.StopsManager;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -57,7 +57,7 @@ public class NewFavoritesFragment extends Fragment{
 
         emptyFavoritesTextView = (TextView) rootView.findViewById(R.id.noFavoritesTextView);
         listView = (ListView) rootView.findViewById(R.id.favoriteListView);
-        StopDB db = StopDB.getInstance(getActivity().getApplicationContext());
+        StopsManager db = StopsManager.getInstance(getActivity().getApplicationContext());
         adp = new RouteCursorAdapter(getActivity().getApplicationContext(),
                 db.getFavoriteCursor());
 

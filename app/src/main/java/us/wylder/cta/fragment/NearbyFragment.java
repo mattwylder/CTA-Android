@@ -19,7 +19,7 @@ import java.util.ArrayList;
 
 import us.wylder.cta.activity.ArrivalsActivity;
 import us.wylder.cta.R;
-import us.wylder.cta.data.StopDB;
+import us.wylder.cta.data.StopsManager;
 import us.wylder.cta.data.TrainStation;
 
 
@@ -130,7 +130,7 @@ public class NearbyFragment extends ListFragment implements LocationListener {
     @Override
     public void onLocationChanged(Location location) {
         Log.d(TAG, "Latitude: " + location.getLatitude() +" Longitude" + location.getLongitude());
-        StopDB db = StopDB.getInstance(getActivity().getApplicationContext());
+        StopsManager db = StopsManager.getInstance(getActivity().getApplicationContext());
         ArrayList<TrainStation> stns = db.findNearby(location, 1000);
         nearbyStations.clear();
         for(TrainStation st : stns){
