@@ -13,6 +13,8 @@ import us.wylder.cta.R;
 
 
 /**
+ * Adapter for the list of stops.
+ *
  * Created by matt wylder on 11/15/14.
  */
 public class LineCursorAdapter extends CursorAdapter{
@@ -24,9 +26,8 @@ public class LineCursorAdapter extends CursorAdapter{
 
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
-        return LayoutInflater.from(context).inflate(R.layout.line_item, parent, false);
+        return LayoutInflater.from(context).inflate(R.layout.list_item_stop, parent, false);
     }
-
 
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
@@ -34,7 +35,7 @@ public class LineCursorAdapter extends CursorAdapter{
         int ndx2 = cursor.getColumnIndex("_id");
         Log.d(TAG, "bindView " + ndx + " " + ndx2);
 
-        TextView stName = (TextView) view.findViewById(R.id.line_name);
+        TextView stName = (TextView) view.findViewById(R.id.stop_name);
 
         if(stName == null ){
             Log.e(TAG, "Failed to get text view");

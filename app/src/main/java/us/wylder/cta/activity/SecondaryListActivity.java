@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -70,11 +71,20 @@ public class SecondaryListActivity extends ListActivity {
         });
     }
 
+    public void showPopup(View v) {
+
+            PopupMenu popup = new PopupMenu(this, v);
+            MenuInflater inflater = popup.getMenuInflater();
+            inflater.inflate(R.menu.favorite, popup.getMenu());
+            popup.show();
+        }
+
+
     @Override
     protected void onListItemClick (ListView l, View v, int position, long id)
     {
         super.onListItemClick(l,v,position,id);
-        TextView tv = (TextView) v.findViewById(R.id.line_name);
+        TextView tv = (TextView) v.findViewById(R.id.stop_name);
 
         Cursor c = (Cursor) adp.getItem(position);
         int staId = c.getInt(c.getColumnIndex("_id"));
