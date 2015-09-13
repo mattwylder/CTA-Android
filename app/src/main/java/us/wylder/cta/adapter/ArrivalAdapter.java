@@ -32,7 +32,7 @@ public class ArrivalAdapter extends ArrayAdapter<Arrival> {
         Log.d(TAG, "Got Item: "+ curEta);
         if(convertView == null)
         {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.eta_item,
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_item_arrival,
                     parent, false);
         }
 

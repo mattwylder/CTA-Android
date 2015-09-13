@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 
 import us.wylder.cta.activity.ArrivalsActivity;
-import us.wylder.cta.adapter.LineCursorAdapter;
+import us.wylder.cta.adapter.RouteCursorAdapter;
 import us.wylder.cta.R;
 import us.wylder.cta.data.StopDB;
 
@@ -31,7 +31,7 @@ public class FavoriteListFragment extends ListFragment{
 
     private StopDB db;
 
-    LineCursorAdapter adp;
+    RouteCursorAdapter adp;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -44,7 +44,7 @@ public class FavoriteListFragment extends ListFragment{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         db = StopDB.getInstance(getActivity().getApplicationContext());
-        adp = new LineCursorAdapter(getActivity().getApplicationContext(),
+        adp = new RouteCursorAdapter(getActivity().getApplicationContext(),
                 db.getFavoriteCursor());
         setListAdapter(adp);
 

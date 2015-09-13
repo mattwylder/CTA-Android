@@ -95,7 +95,7 @@ public class NearbyFragment extends ListFragment implements LocationListener {
 
         // TODO: Change Adapter to display your content
         adapter = new ArrayAdapter<TrainStation>(getActivity(),
-                R.layout.line_item, R.id.line_name, nearbyStations);
+                R.layout.list_item_route, R.id.line_name, nearbyStations);
         setListAdapter(adapter);
     }
 

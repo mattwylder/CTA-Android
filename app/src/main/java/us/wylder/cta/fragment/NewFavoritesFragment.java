@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import us.wylder.cta.adapter.LineCursorAdapter;
+import us.wylder.cta.adapter.RouteCursorAdapter;
 import us.wylder.cta.R;
 import us.wylder.cta.data.StopDB;
 
@@ -29,7 +29,7 @@ public class NewFavoritesFragment extends Fragment{
     private OnFragmentInteractionListener mListener;
     private ListView listView;
     private TextView emptyFavoritesTextView;
-    private LineCursorAdapter adp;
+    private RouteCursorAdapter adp;
 
 
     public NewFavoritesFragment() {
@@ -58,7 +58,7 @@ public class NewFavoritesFragment extends Fragment{
         emptyFavoritesTextView = (TextView) rootView.findViewById(R.id.noFavoritesTextView);
         listView = (ListView) rootView.findViewById(R.id.favoriteListView);
         StopDB db = StopDB.getInstance(getActivity().getApplicationContext());
-        adp = new LineCursorAdapter(getActivity().getApplicationContext(),
+        adp = new RouteCursorAdapter(getActivity().getApplicationContext(),
                 db.getFavoriteCursor());
 
         draw();
