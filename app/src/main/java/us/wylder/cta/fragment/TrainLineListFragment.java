@@ -22,9 +22,6 @@ import us.wylder.cta.data.StopsManager;
  */
 public class TrainLineListFragment extends ListFragment {
 
-    //Placeholder Data
-    String[] crap = {"Poo", "Pee", "Butts", "Balls", "Penis", "Weiner", "Butthole", "Jizz",
-            "Pockets", "LeVar Burton", "Patrick Swayze", "Jack Johnson", "Terri Gross", "Lord & Taylor"};
 
     private static final String ARG_SECTION_NUMBER = "section_number";
 
